@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      form {
+        height: 500px;
+        background: rgb(32, 211, 211);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+      }
+      input {
+        padding: 10px;
+        font-size: 17px;
+        border: 1px solid #3c73c5;
+        border-radius: 10px;
+      }
+    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>form2</title>
+  </head>
+  <body>
+    <form id="register-form">
+      <h1>Login With Your Name And Password</h1>
+      <input type="text" placeholder="Your Name" onchange="getUserName(event)" id="name" required />
+      <input type="password" placeholder="Your Password" onchange="getPass(event)" id="pw" required/>
+      <input type="submit" value="submit" id="btn" onclick="displayMatchedUser(event)"/>
+    </form>
+    <script>
+     let userName = "";
+     let pass = "";
+     function getUserName(e) {
+       userName = e.target.value;
+     }
+     function getPass(e) {
+       pass = e.target.value;
+     }
+     function displayMatchedUser(event) {
+  event.preventDefault();
+  
+  const storedUsername = localStorage.getItem("name");
+  const storedPassword = localStorage.getItem("pwd");
+  const storedUserData = JSON.parse(localStorage.getItem("userData"));
+  
+  console.log(userName, "  ",storedUsername, "  ",pass, "  ",storedPassword)
+  if(userName.length && pass.length) {
+      if(userName === storedUsername && pass === storedPassword) {
+        fetch("https://jsonplaceholder.typicode.com/users")
+      .then((response) => response.json())
+      .then((data) => {
+        const matchedUser = data.find((user) => {
+          if (user.name === storedUsername) {
+            return true;
+          }
+        });
+        
+        if (matchedUser) {
+          const companyData = JSON.parse(localStorage.getItem("companyData"));
+            const addressData = JSON.parse(localStorage.getItem("addressData"));
+          console.log(companyData);
+            // // Add company and address objects to the matchedUser
+            // matchedUser.company = companyData;
+            // matchedUser.address = addressData;
+          localStorage.setItem("matchedUser", JSON.stringify(matchedUser));
+          
+          console.log(matchedUser, "matchedUser");
+          window.location.href="form21.html";
+          displayUserData(matchedUser); // Display user data
+        } else {
+          throw new Error("No matching user found");
+        }
+      })
+      .catch((error) => {
+        console.log("Error:", error);
+      });
+      }
+      else {
+        alert("Invalid Credentials")
+      }
+  }else {
+    alert("all feilds are required")
+  }
+}
+
+function displayUserData(user) {
+  // Display the user data on the page or perform actions with it
+  console.log("User data:", user);
+  // You can access specific properties of the user object like user.name, user.email, etc.
+}
+// function displayErrorMessage(message) {
+//   const errorMessageElement = document.getElementById("error-message");
+//   errorMessageElement.textContent = message;
+//   errorMessageElement.style.display = "block";
+// }
+
+// function navigateToNextPage() {
+//   const matchedUser = JSON.parse(localStorage.getItem("matchedUser"));
+//   const queryParams = new URLSearchParams();
+//   queryParams.append("user", JSON.stringify(matchedUser));
+//   const nextPageURL = "form21.html?" + queryParams.toString();
+//   window.location.href = nextPageURL;
+// }
+
+//         function displayMatchedUser() {
+//             event.preventDefault();
+//   const storedUsername = localStorage.getItem("name");
+//   const storedUserData = JSON.parse(localStorage.getItem("userData"));
+//   if (!storedUsername) {
+//     console.log("No stored username or user data found.");
+//     // Handle the case when there is no stored username or user data
+//   } else {
+//     fetch("https://jsonplaceholder.typicode.com/users")
+//           .then((response) => response.json())
+//           .then((data) => {
+//             const usernames = data.map((user) => user.name);
+//             // console.log(usernames);
+//             const znmae = document.getElementById("name").value;
+//             console.log(znmae, '0')
+//             const matchedUser = usernames.find(user => {
+             
+
+//             if (user === storedUsername && user === znmae){
+//               localStorage.setItem("matchedUser", JSON.stringify(matchedUser));
+//               console.log(matchedUser, "storedUsername");
+//                 // window.location.href = 'form21.html';
+//             } else {
+//               throw new Error("No matching user found");
+//             }
+//           })
+          
+//           .catch((error) => {
+//             console.log("Error:", error);
+//           });
+//   })
+// }
+//         }
+
+
+
+//      const storedUsername = localStorage.getItem("name");
+//     const storedUserData = JSON.parse(localStorage.getItem("userData"));
+
+// if (!storedUsername || !storedUserData) {
+//   console.log("No stored username or user data found.");
+//   // Handle the case when there is no stored username or user data
+// } 
+// else {
+//   fetch("https://jsonplaceholder.typicode.com/users")
+//     .then((response) => response.json())
+//     .then((data) => {
+//       const matchedUserData = data.find((user) => user.name === storedUsername);
+
+//       if (matchedUserData && matchedUserData.id === storedUserData.id) {
+//         console.log("Matched user found:", matchedUserData);
+//         localStorage.setItem("matchedUser", JSON.stringify(matchedUserData));
+//         window.location.href = "form21.html";
+//         // Display the matched user data or perform desired actions
+//       } else {
+//         console.log("No matching user found or data mismatch.");
+//         // Handle the case when no matching user is found or the data doesn't match
+//       }
+//     })
+//     .catch((error) => {
+//       console.log("Error:", error);
+//     });
+// }
+        
+//     //   function handleClick(event) {
+//     //     event.preventDefault();
+//     //     const storedUsername = localStorage.getItem("name");
+//     //     const name = document.getElementById("name").value;
+//     //     if (!storedUsername) {
+//     //       console.log("No username stored in local storage.");
+//     //       return;
+    //     }
+
+    //     fetch("https://jsonplaceholder.typicode.com/users")
+    //       .then((response) => response.json())
+    //       .then((data) => {
+    //         const usernames = data.map((user) => user.name);
+    //         console.log(usernames);
+    //         const matchedUser = usernames.filter((user) => {
+    //           if (storedUsername === user) {
+    //             return true; // Keep the element if there's a match
+    //           }
+    //           return false; // Discard the element if there's no match
+    //         });
+    //         console.log(matchedUser, "storedUsername");
+
+    //         if (matchedUser) {
+    //           localStorage.setItem("matchedUser", JSON.stringify(matchedUser));
+    //             // window.location.href = 'form21.html';
+    //         } else {
+    //           throw new Error("No matching user found");
+    //         }
+    //       })
+    //       .catch((error) => {
+    //         console.log("Error:", error);
+    //       });
+      
+      //         function handleClick(event) {
+      //   event.preventDefault();
+      //   fetch('https://jsonplaceholder.typicode.com/users')
+      //     .then(response => response.json())
+      //     .then(data => {
+      //       const usernames = data.map(user => user.name);
+      //       const storedUsername = localStorage.getItem('name');
+      //       const matchedUser = data.find(user => user.name === storedUsername);
+
+      //       if (matchedUser==storedname && matchedUser==null) {
+      //         localStorage.setItem('matchedUser', JSON.stringify(matchedUser));
+      //         window.location.href = 'form21.html';
+      //       } else {
+      //         alert('no match found');
+      //       }
+      //     })
+      //     .catch(error => {
+      //       console.log('Error:', error);
+      //     });
+      // }
+      //         function handleClick(event) {
+      //   event.preventDefault();
+      //   fetch('https://jsonplaceholder.typicode.com/users')
+      //     .then(response => response.json())
+      //     .then(data => {
+      //       const usernames = data.map(user => user.name);
+      //       const storedUsername = localStorage.getItem('name');
+      //       const matchedUsernames = usernames.filter(username => username === storedUsername);
+
+      //       if (matchedUsernames!==matchedUsernames) {
+      //         localStorage.setItem('matchedUsernames', JSON.stringify(matchedUsernames));
+      //         window.location.href = 'form21.html';
+      //       } else {
+      //         console.log('No matching usernames found');
+      //       }
+      //     })
+      //     .catch(error => {
+      //       console.log('Error:', error);
+      //     });
+      // }
+
+      //         function handleClick(event) {
+      //   event.preventDefault();
+
+      //   fetch('https://jsonplaceholder.typicode.com/users')
+      //     .then(response => response.json())
+      //     .then(data => {
+      //       const usernames = data.map(user => user.name);
+      //       const storedUsername = localStorage.getItem('name');
+      //       const matchedUsernames = usernames.filter(username => username === storedUsername);
+
+      //       if (matchedUsernames.length > 0) {
+      //         localStorage.setItem('matchedUsernames', JSON.stringify(matchedUsernames));
+      //         window.location.href = 'form21.html';
+      //       } else {
+      //         console.log('No matched usernames found.');
+      //       }
+      //     })
+      //     .catch(error => {
+      //       console.log('Error:', error);
+      //     });
+      // }
+
+      // function handleClick(event) {
+      //   event.preventDefault();
+      //   const name = document.getElementById('name').value;
+      //   const password = document.getElementById('pw').value;
+      //   const userData = {
+      //     name: name,
+      //     password: password
+      //   };
+      //   localStorage.setItem('userData', JSON.stringify(userData));
+      //   window.location.href = 'form21.html';
+      // }
+      //       function handleClick(event){
+      //       event.preventDefault();
+      //       fetch('https://jsonplaceholder.typicode.com/users')
+      //   .then(response => response.json())
+      //   .then(data => {
+      //     const usernames = data.map(user => user.name);
+      //     const storedUsername = localStorage.getItem('name');
+      //     const matchedUsernames = usernames.filter(username => {
+      //       return username === storedUsername;
+      //       console.log('data');
+      //       window.location.href='form21.html';
+      //     });
+
+      //     console.log(matchedUsernames);
+
+      // })
+
+      //   .catch(error => {
+      //     console.log('Error:', error);
+      //   });
+      // }
+      // function handleClick(event) {
+      //   event.preventDefault();
+
+      //   const name = document.getElementById('name').value;
+      //   const password = document.getElementById('pw').value;
+
+      //   const userData = {
+      //     name: name,
+      //     password: password
+      //   };
+
+      //   localStorage.setItem('userData', JSON.stringify(userData));
+
+      //   window.location.href = 'form21.html';
+      // }
+
+      // if(userdata==matched){
+      //     document.writeln("your user data is");
+      // }
+      //     else{
+      //         document.writeln("user data is not matched");
+      // }
+    </script>
+  </body>
+</html>

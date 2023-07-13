@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        form {
+            height: 500px;
+            background: rgb(32, 211, 211);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        input {
+            padding: 10px;
+            font-size: 17px;
+            border: 1px solid #3c73c5;
+            border-radius: 10px;
+        }
+        .user-details-container{
+            color: aliceblue;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>form2</title>
+</head>
+<body bgcolor="alice">
+  <h1 style="color: aliceblue;">Welcome This Is Your API Fetch Data</h1>
+  <div id="userData"></div>
+  <div id="user-details-container"><p>id: 1</p>
+    <p>name: Leanne Graham</p>
+    <p>username: Bret</p>
+    <p>email: Sincere@april.biz</p>
+    <p>address:  street Kulas Light
+      <p>suite: Apt. 556,</p>
+      <p>  city: Gwenborough</p>
+      <p> zipcode: 92998-3874,</p>
+      <p> geo: 
+        lat: -37.3159</p>
+        lng: 81.1496</p>
+    <p>phone: 1-770-736-8031 x56442</p>
+    <p>website: hildegard.org</p>
+    <p>company: name: Romaguera-Crona</p>
+    <p>catchPhrase: Multi-layered client-server neural-net</p>
+    <p>bs: harness real-time e-markets</p></div>
+
+ <script>
+    function displayMatchedUser() {
+      
+  const matchedUser = JSON.parse(localStorage.getItem('matchedUser'));
+  const userDetailsContainer = document.getElementById('user-details-container');
+  
+  if (matchedUser) {
+    const userKeys = Object.keys(matchedUser);
+    userKeys.forEach(key => {
+      const detailElement = document.createElement('p');
+      detailElement.textContent = `${key}: ${matchedUser[key]}`;
+      userDetailsContainer.appendChild(detailElement);
+    });
+  } else {
+    const noMatchElement = document.createElement('p');
+    noMatchElement.textContent = 'No matching user found.';
+    userDetailsContainer.appendChild(noMatchElement);
+  }
+}
+
+// displayMatchedUser();
+
+</script>
+</body>
+</html>
+
+    <!-- // const userData = (localStorage.getItem('userData'));
+    // const userDataDiv = document.getElementById('userData');
+
+    // if (userData) {
+    //   const name = userData.name;
+    //   const password = userData.password;
+    //   userData.innerHTML = `<p>Name: ${name}</p>
+    //   <p>Password: ${password}</p>`;
+    // } else {
+    //   userData.innerHTML = '<p>No user data available.</p>';
+    // }
+   
+    alert('welcome');
+ </script>
+</body>
+</html> -->
+<!-- //function click(e){
+    event.preventDefault();
+  fetch('https://jsonplaceholder.typicode.com/users')
+.then(response => response.json())
+.then(data => {
+const usernames = data.map(user => user.username);
+const storedUsername = localStorage.getItem('name');
+const password=localStorage.getItem('password');
+const matchedUsernames = usernames.filter(username => {
+  if( username === storedUsername){
+    return true;
+  }
+  else{
+    return false;
+  }
+});
+console.log(matchedUsernames);
+// -->
